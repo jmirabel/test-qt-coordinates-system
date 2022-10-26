@@ -36,6 +36,7 @@ def test_app(qtbot):
     #scene.view.show()
     w.show()
     qtbot.wait(1000)
+    scene.view.fitInView(100, 100, 300, 300)
     rect = scene.a.boundingRect()
     scenePos = scene.a.mapToScene(rect.center().toPoint())
     viewPos = scene.view.mapFromScene(scenePos)
