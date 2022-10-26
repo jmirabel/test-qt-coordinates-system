@@ -1,6 +1,6 @@
 import pytest
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QGraphicsView
-from PySide2.QtCore import Qt, QPoint
+from PySide2.QtCore import Qt, QPoint, QSize
 import sys
 
 import app
@@ -37,8 +37,12 @@ def test_app(qtbot):
     w.show()
     qtbot.wait(1000)
     scene.view.fitInView(100, 100, 300, 300)
+    transform = scene.view.transform()
+    transform.scale(1/10, 1/10)
+    scene.view.setTransform(transform)
     rect = scene.a.boundingRect()
-    scenePos = scene.a.mapToScene(rect.center().toPoint())
+    scenePos = scene.a.mapToScene(rect.center())
+    print("Initial scene pos", scenePos)
     viewPos = scene.view.mapFromScene(scenePos)
     qtbot.mouseClick(w, Qt.MouseButton.LeftButton, pos=viewPos, delay=1000)
     qtbot.wait(1000)
